@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edAreas_constrait"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".editar_areas"
+    android:background="#EFE9F4"
+    android:fitsSystemWindows="true"
+    android:paddingTop="?attr/actionBarSize"
+    android:backgroundTint="#EFE9F4">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EFE9F4"
+        android:fitsSystemWindows="true"
+        android:backgroundTint="#EFE9F4">
+
+        <TextView
+            android:id="@+id/edAreas_Titulos"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:textSize="38sp"
+            android:text="Áreas"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textAlignment="center"
+            android:paddingTop="25dp"
+            android:textColor="#001B2E"
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3"/>
+
+        <include layout="@layout/formulario_areas"
+            android:id="@+id/layout_formulario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edAreas_Titulos"/>
+
+
+        <RelativeLayout
+            android:id="@+id/edAreas_RL_Edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/layout_formulario"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/edAreas_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Editar"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="#00000000"
+                android:textColor="#001B2E"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="#001B2E"
+                app:cornerRadius="10dp"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/edAreas_RL_SaveCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/layout_formulario"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/edAreas_Guardar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Guardar"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="#00000000"
+                android:textColor="#001B2E"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="#001B2E"
+                app:cornerRadius="10dp"
+                android:layout_centerVertical="true"/>
+
+            <Button
+                android:id="@+id/edAreas_Cancelar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Cancelar"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="50dp"
+                android:backgroundTint="#00000000"
+                android:textColor="#001B2E"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="#001B2E"
+                app:cornerRadius="10dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/edAreas_Guardar_button"/>
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

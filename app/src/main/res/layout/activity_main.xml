@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#154360"
+    android:id="@+id/rl1"
+    >
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Resumen de Actividades"
+        android:textColor="#D3C7C7"
+        android:textSize="40dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingVertical="30dp"
+        />
+    <Button
+        android:id="@+id/btnPortada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Portada"
+        android:backgroundTint="#138D75"
+        android:textSize="35dp"
+        android:paddingVertical="40dp"
+        />
+    <Button
+        android:id="@+id/btnInicioSesion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inicio de Sesión"
+        android:backgroundTint="#16A085"
+        android:textSize="35dp"
+        android:paddingVertical="40dp"
+        />
+    <Button
+        android:id="@+id/btnMenu_lateral"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="menu lateral"
+        android:backgroundTint="#45B39D"
+        android:textSize="35dp"
+        android:paddingVertical="40dp"
+        />
+    <Button
+        android:id="@+id/btnCiclo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ciclo de Vida"
+        android:backgroundTint="#73C6B6"
+        android:textSize="35dp"
+        android:paddingVertical="40dp"
+        />
+</LinearLayout>

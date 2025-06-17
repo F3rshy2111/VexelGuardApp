@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+
+    android:id="@+id/registro_regular"
+    tools:context=".registro_regular"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#EFE9F4"
+        android:fitsSystemWindows="true"
+        android:id="@+id/reg_regular_constrait"
+        android:paddingTop="?attr/actionBarSize"
+        android:backgroundTint="#EFE9F4">
+
+
+        <TextView
+            android:id="@+id/reg_tv8"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:textSize="38sp"
+            android:text="Registrar usuario regular"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textAlignment="center"
+            android:paddingTop="25dp"
+            android:textColor="#001B2E"
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3"/>
+
+        <TextView
+            android:id="@+id/reg_tv9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textColor="#001B2E"
+            android:textSize="17sp"
+            android:text="Correo electrónico"
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reg_tv8"
+            app:layout_constraintVertical_bias="0.1"/>
+
+        <EditText
+            android:id="@+id/et_reg_regu_correo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#001B2E"
+            android:hint="Ingresa el correo del usuario"
+            android:textColorHint="#001B2E"
+            android:textSize="17sp"
+            android:textStyle="italic"
+            android:inputType="textEmailAddress"
+            android:fontFamily="@font/palatino_linotype"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reg_tv9"
+            app:layout_constraintVertical_bias="0.3"/>
+
+        <TextView
+            android:id="@+id/reg_tv10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="Nombre"
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_reg_regu_correo"
+            app:layout_constraintVertical_bias="0.1"/>
+
+        <EditText
+            android:id="@+id/et_reg_regu_nombre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#001B2E"
+            android:hint="Ingresa el nombre completo del usuario"
+            android:textColorHint="#001B2E"
+            android:textSize="17sp"
+            android:textStyle="italic"
+            android:inputType="text"
+            android:fontFamily="@font/palatino_linotype"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reg_tv10"
+            app:layout_constraintVertical_bias="0.1"/>
+
+        <TextView
+            android:id="@+id/reg_tv11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="Área/Grupo"
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_reg_regu_nombre"
+            app:layout_constraintVertical_bias="0.1"/>
+
+        <include layout="@layout/formulario_areas"
+            android:id="@+id/formulario_Areas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/reg_tv11"/>
+
+        <LinearLayout
+            android:id="@+id/formularioFotos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/formulario_Areas"
+            app:layout_constraintVertical_bias="0.1">
+
+            <Button
+                android:id="@+id/btnSeleccionar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Seleccionar Fotos (9)"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="#00000000"
+                android:textColor="#001B2E"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="#001B2E"
+                app:cornerRadius="10dp"/>
+
+            <GridView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:horizontalSpacing="8dp"
+                android:numColumns="3"
+                android:paddingTop="16dp"
+                android:verticalSpacing="8dp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:gravity="center_horizontal"
+                android:paddingTop="16dp"
+                android:textColor="#001B2E"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/formularioFotos"
+            app:layout_constraintVertical_bias="0.1">
+
+            <Button
+                android:id="@+id/btn_reg_regu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Registrar"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="#00000000"
+                android:textColor="#001B2E"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="#001B2E"
+                app:cornerRadius="10dp"
+                />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

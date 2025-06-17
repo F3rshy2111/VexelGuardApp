@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/info_usuario"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".info_usuario"
+    android:orientation="vertical"
+    android:background="#EFE9F4"
+    android:fitsSystemWindows="true"
+    android:paddingTop="?attr/actionBarSize"
+    android:backgroundTint="#EFE9F4">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="38sp"
+        android:text="Información de usuario"
+        android:textAlignment="center"
+        android:paddingTop="25dp"
+        android:textColor="#001B2E"
+        android:textStyle="bold"
+        android:fontFamily="@font/palatino_linotype"/>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/avatar_black"/>
+
+    <TextView
+        android:id="@+id/infUs_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="Nombre"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="#001B2E"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/palatino_linotype"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/correo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="Correo electrónico:"
+            android:textStyle="bold"
+            android:textColor="#001B2E"
+            android:layout_marginTop="10dp"
+            android:paddingRight="15dp"
+            android:fontFamily="sans-serif"/>
+
+        <TextView
+            android:id="@+id/infUs_correo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="correo@mail.com"
+            android:textColor="#001B2E"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
+            android:layout_toRightOf="@id/correo"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="Tipo de usuario:"
+            android:textStyle="bold"
+            android:textColor="#001B2E"
+            android:layout_marginTop="10dp"
+            android:paddingRight="15dp"
+            android:fontFamily="sans-serif"/>
+        <TextView
+            android:id="@+id/infUs_tipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="UserType"
+            android:textColor="#001B2E"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
+            android:layout_toRightOf="@id/tipo"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="Área:"
+            android:textStyle="bold"
+            android:textColor="#001B2E"
+            android:layout_marginTop="10dp"
+            android:paddingRight="15dp"
+            android:fontFamily="sans-serif"/>
+        <TextView
+            android:id="@+id/infUs_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="Ejemplo"
+            android:textColor="#001B2E"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
+            android:layout_toRightOf="@id/area"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="Permisos de acceso:"
+        android:textStyle="bold"
+        android:textColor="#001B2E"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:id="@+id/infUs_lunes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="Lunes - De 09:00 a 18:00"
+        android:textColor="#001B2E"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:id="@+id/infUs_martes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="Martes - De 09:00 a 18:00"
+        android:textColor="#001B2E"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:id="@+id/infUs_miercoles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="Miercoles - De 09:00 a 18:00"
+        android:textColor="#001B2E"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:id="@+id/infUs_jueves"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="Jueves - De 09:00 a 18:00"
+        android:textColor="#001B2E"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:id="@+id/infUs_viernes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="Viernes - De 09:00 a 18:00"
+        android:textColor="#001B2E"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:id="@+id/infUs_sabado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="Sabado - De 09:00 a 18:00"
+        android:textColor="#001B2E"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:id="@+id/infUs_domingo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="Domingo - De 09:00 a 18:00"
+        android:textColor="#001B2E"
+        android:fontFamily="sans-serif"/>
+
+    <Button
+        android:id="@+id/btn_cambiar_cont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Cambiar contraseña"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#00000000"
+        android:textColor="#001B2E"
+        style="?attr/materialButtonOutlinedStyle"
+        app:strokeColor="#001B2E"
+        app:cornerRadius="10dp"/>
+
+</LinearLayout>

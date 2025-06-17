@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item android:id="@+id/nav_item_portada"
+            android:title="Inicio"/>
+        <item android:id="@+id/nav_item_codigoAcceso"
+            android:title="Código de acceso"/>
+        <item android:id="@+id/nav_item_historialAcceso"
+            android:title="Historial de accesos"/>
+        <item android:id="@+id/nav_item_infoUsuario"
+            android:title="Información de usuario"/>
+    </group>
+
+    <item android:title="Funciones Administrador"
+        android:id="@+id/nav_item_funAdmin">
+        <menu>
+            <item android:id="@+id/nav_item_regRegular"
+                android:title="Registrar usuario regular"/>
+            <item android:id="@+id/nav_item_regInvitado"
+                android:title="Registrar usuario invitado"/>
+            <item android:id="@+id/nav_item_editarUsers"
+                android:title="Editar usuarios"/>
+            <item android:id="@+id/nav_item_editarAreas"
+                android:title="Editar permisos de áreas"/>
+        </menu>
+    </item>
+</menu>

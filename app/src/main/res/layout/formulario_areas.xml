@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/formularioAreas"
+    android:background="#EFE9F4"
+    android:fitsSystemWindows="true"
+    android:backgroundTint="#EFE9F4">
+
+    <RelativeLayout
+        android:id="@+id/RL_Areas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.85"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/edAreas_RL_Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/edAreas_tv_historial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Área: "
+                android:textSize="18sp"
+                android:textColor="#001B2E"
+                android:paddingLeft="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"/>
+
+            <Spinner
+                android:id="@+id/edAreas_Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:layout_toRightOf="@id/edAreas_tv_historial"
+                android:layout_alignBaseline="@id/edAreas_tv_historial"
+                />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/arrow_drop_down_24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="14dp"
+                android:clickable="false"
+                android:focusable="false"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/edAreas_crearArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            >
+            <EditText
+                android:id="@+id/edAreas_etCrearArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#001B2E"
+                android:hint="Ingresa el nombre de la nueva área"
+                android:textColorHint="#001B2E"
+                android:textSize="17sp"
+                android:textStyle="italic"
+                android:inputType="text"
+                android:fontFamily="@font/palatino_linotype"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/edAreas_LinearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RL_Areas"
+        >
+        <CheckBox
+            android:id="@+id/cb_crearArea"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="Crear nueva área"
+            android:textColor="#001B2E"
+            android:fontFamily="@font/palatino_linotype"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:checked="false"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/edAreas_RL_Lunes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintWidth_percent="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edAreas_LinearLayout2"
+        app:layout_constraintVertical_bias="0.1"
+        >
+
+        <CheckBox
+            android:id="@+id/edAreas_Rbtn_Lunes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="Lunes"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"/>
+
+        <TextView
+            android:id="@+id/edAreas_horEnt_Lunes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="17dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="De: "
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/edAreas_etEnt_Lunes"/>
+
+        <EditText
+            android:id="@+id/edAreas_etEnt_Lunes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_horSal_Lunes"
+            />
+
+        <TextView
+            android:id="@+id/edAreas_horSal_Lunes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="A: "
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_etSal_Lunes"/>
+
+        <EditText
+            android:id="@+id/edAreas_etSal_Lunes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:hint="00:00"
+            android:textColor="#001B2E"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edAreas_RL_Martes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edAreas_RL_Lunes"
+        app:layout_constraintVertical_bias="0.1"
+        >
+
+        <CheckBox
+            android:id="@+id/edAreas_Rbtn_Martes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="Martes"
+            android:checked="true"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"/>
+
+        <TextView
+            android:id="@+id/edAreas_horEnt_Martes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:textColor="#001B2E"
+            android:textSize="17sp"
+            android:text="De: "
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/edAreas_etEnt_Martes"/>
+
+        <EditText
+            android:id="@+id/edAreas_etEnt_Martes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_horSal_Martes"/>
+
+        <TextView
+            android:id="@+id/edAreas_horSal_Martes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="A: "
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_etSal_Martes"/>
+
+        <EditText
+            android:id="@+id/edAreas_etSal_Martes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edAreas_RL_Miercoles"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edAreas_RL_Martes"
+        app:layout_constraintVertical_bias="0.1"
+        >
+
+        <CheckBox
+            android:id="@+id/edAreas_Rbtn_Miercoles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="Miércoles"
+            android:checked="false"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"/>
+
+        <TextView
+            android:id="@+id/edAreas_horEnt_Miercoles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="17dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="De: "
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/edAreas_etEnt_Miercoles"/>
+
+        <EditText
+            android:id="@+id/edAreas_etEnt_Miercoles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_horSal_Miercoles"/>
+
+        <TextView
+            android:id="@+id/edAreas_horSal_Miercoles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="A: "
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_etSal_Miercoles"/>
+
+        <EditText
+            android:id="@+id/edAreas_etSal_Miercoles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edAreas_RL_Jueves"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edAreas_RL_Miercoles"
+        app:layout_constraintVertical_bias="0.1"
+        >
+
+        <CheckBox
+            android:id="@+id/edAreas_Rbtn_Jueves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="Jueves"
+            android:checked="true"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"/>
+
+        <TextView
+            android:id="@+id/edAreas_horEnt_Jueves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="17dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="De: "
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/edAreas_etEnt_Jueves"/>
+
+        <EditText
+            android:id="@+id/edAreas_etEnt_Jueves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_horSal_Jueves"/>
+
+        <TextView
+            android:id="@+id/edAreas_horSal_Jueves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="A: "
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_etSal_Jueves"/>
+
+        <EditText
+            android:id="@+id/edAreas_etSal_Jueves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edAreas_RL_Viernes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edAreas_RL_Jueves"
+        app:layout_constraintVertical_bias="0.1"
+        >
+
+        <CheckBox
+            android:id="@+id/edAreas_Rbtn_Viernes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="Viernes"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"/>
+
+        <TextView
+            android:id="@+id/edAreas_horEnt_Viernes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="De: "
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/edAreas_etEnt_Viernes"/>
+
+        <EditText
+            android:id="@+id/edAreas_etEnt_Viernes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_horSal_Viernes"/>
+
+        <TextView
+            android:id="@+id/edAreas_horSal_Viernes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="A: "
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@+id/edAreas_etSal_Viernes"/>
+
+        <EditText
+            android:id="@+id/edAreas_etSal_Viernes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edAreas_RL_Sabado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edAreas_RL_Viernes"
+        app:layout_constraintVertical_bias="0.1"
+        >
+
+        <CheckBox
+            android:id="@+id/edAreas_Rbtn_Sabado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="Sábado"
+            android:checked="true"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"/>
+
+        <TextView
+            android:id="@+id/edAreas_horEnt_Sabado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="17dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="De: "
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/edAreas_etEnt_Sabado"/>
+
+        <EditText
+            android:id="@+id/edAreas_etEnt_Sabado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_horSal_Sabado"/>
+
+        <TextView
+            android:id="@+id/edAreas_horSal_Sabado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="A: "
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@+id/edAreas_etSal_Sabado"/>
+
+        <EditText
+            android:id="@+id/edAreas_etSal_Sabado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edAreas_RL_Domingo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edAreas_RL_Sabado"
+        app:layout_constraintVertical_bias="0.1"
+        >
+
+        <CheckBox
+            android:id="@+id/edAreas_Rbtn_Domingo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="Domingo"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"/>
+
+        <TextView
+            android:id="@+id/horEnt_reg_domingo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="17dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="De: "
+            android:textStyle="bold"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/edAreas_etEnt_Domingo"/>
+
+        <EditText
+            android:id="@+id/edAreas_etEnt_Domingo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_horSal_Domingo"/>
+
+        <TextView
+            android:id="@+id/edAreas_horSal_Domingo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:textColor="#001B2E"
+            android:textSize="17dp"
+            android:text="A: "
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_toStartOf="@id/edAreas_etSal_Domingo"/>
+
+        <EditText
+            android:id="@+id/edAreas_etSal_Domingo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#001B2E"
+            android:hint="00:00"
+            android:textColorHint="#001B2E"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:inputType="time"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/palatino_linotype"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
