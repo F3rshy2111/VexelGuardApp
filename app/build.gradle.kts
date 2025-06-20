@@ -69,7 +69,7 @@ dependencies {
     implementation(libs.google.firebase.firestore)
     implementation(libs.firebase.auth)
     implementation(libs.kotlinx.datetime)
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.kotlinx.coroutines.play.services)
     implementation(libs.google.firebase.auth)
     implementation(libs.androidx.biometric)

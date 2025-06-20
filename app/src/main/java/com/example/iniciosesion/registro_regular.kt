@@ -105,7 +105,6 @@ class registro_regular : navDrawer() {
     private lateinit var statusText: TextView
     private lateinit var layout: LinearLayout
     private lateinit var btnSeleccionar: Button
-    private lateinit var btnEnviar: Button
     private lateinit var gridView: GridView
     private val imageUris = mutableListOf<Uri>()
     private lateinit var imageAdapter: ImageAdapter
@@ -616,7 +615,6 @@ class registro_regular : navDrawer() {
     private fun enviarVariasFotos(usId : String) {
 
         runOnUiThread {
-            btnEnviar.isEnabled = false
             progressBar.visibility = View.VISIBLE
             statusText.text = "Enviando fotos..."
         }
@@ -656,7 +654,6 @@ class registro_regular : navDrawer() {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     runOnUiThread {
-                        btnEnviar.isEnabled = true
                         progressBar.visibility = View.GONE
                         statusText.text = "Error al enviar las fotos"
                         Log.d("PruebasHTTP", "Error:"+ e )
@@ -666,7 +663,6 @@ class registro_regular : navDrawer() {
 
                 override fun onResponse(call: Call, response: Response) {
                     runOnUiThread {
-                        btnEnviar.isEnabled = true
                         progressBar.visibility = View.GONE
                         if (response.isSuccessful) {
                             statusText.text = "Fotos enviadas correctamente"
