@@ -956,4 +956,35 @@ class edit_specific_user : navDrawer() {
                 startActivity(intencion1)
             }.show()
     }
+
+    //-------------------------------- ELIMINAR USUARIO --------------------------------------
+
+    private fun eliminarUsuario(uid:String){
+        eliminarDocumentosTipo(uid)
+        db.collection("usuarios").document(uid).get().addOnSuccessListener {
+            document -> if(document.exists()){
+                val controlAsistencia = document.getString("historial_accesos")
+            if (controlAsistencia != null) {
+                db.collection("Control_Asistencia").document(controlAsistencia).delete().addOnSuccessListener {
+                    Log.d("CambioTipo", "Documento de control de asistencia eliminado")
+                    deleteUser(uid)
+                }
+            }
+        }
+        }
+    }
+
+    private fun deleteUser(uid:String){
+        db.collection("usuarios").document(uid).delete().addOnSuccessListener {
+            Log.d("DeleteUser", "Usuario Eliminado")
+            val customView = layoutInflater.inflate(R.layout.dialog_eliminado, null)
+            AlertDialog.Builder(this@edit_specific_user)
+                .setView(customView)
+                .setPositiveButton("Entendido") { dialog, _ ->
+                    dialog.dismiss()
+                    val intencion1 = Intent(applicationContext, Portada::class.java)
+                    startActivity(intencion1)
+                }.show()
+        }
+    }
 }
