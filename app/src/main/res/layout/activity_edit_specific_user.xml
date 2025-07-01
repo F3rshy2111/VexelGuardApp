@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:id="@+id/editSpecificUser"
+    tools:context=".edit_specific_user">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EFE9F4"
+        android:fitsSystemWindows="true"
+        android:paddingTop="?attr/actionBarSize"
+        android:backgroundTint="#EFE9F4"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linLay_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3">
+
+            <TextView
+                android:id="@+id/textView_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:text="Editar usuario"
+                android:textAlignment="center"
+                android:paddingTop="25dp"
+                android:textColor="#001B2E"
+                android:textStyle="bold"
+                android:fontFamily="@font/palatino_linotype"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="15dp">
+                <TextView
+                    android:id="@+id/correo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="Correo electrónico:"
+                    android:textStyle="bold"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="15dp"
+                    android:fontFamily="sans-serif"/>
+
+                <TextView
+                    android:id="@+id/updUser_correo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="correo@mail.com"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_toRightOf="@id/correo"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:id="@+id/tipo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="Tipo:"
+                    android:textStyle="bold"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="15dp"
+                    android:fontFamily="sans-serif"/>
+
+                <TextView
+                    android:id="@+id/updUser_tipo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="Tipo"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_toRightOf="@id/tipo"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_updUser_Bio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:id="@+id/datosBio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="Datos Biométricos:"
+                    android:textStyle="bold"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="15dp"
+                    android:fontFamily="sans-serif"/>
+
+                <TextView
+                    android:id="@+id/updUser_datosBio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="Sí"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_toRightOf="@id/datosBio"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_updUser_OTP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:id="@+id/OTP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="OTP:"
+                    android:textStyle="bold"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="15dp"
+                    android:fontFamily="sans-serif"/>
+
+                <TextView
+                    android:id="@+id/updUser_OTP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="Sí"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_toRightOf="@id/OTP"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_updUser_lastOTP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:id="@+id/lastOTP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="Última OTP:"
+                    android:textStyle="bold"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="15dp"
+                    android:fontFamily="sans-serif"/>
+
+                <TextView
+                    android:id="@+id/updUser_lastOTP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="Sí"
+                    android:textColor="#001B2E"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_toRightOf="@id/lastOTP"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linlay_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linLay_1"
+            app:layout_constraintVertical_bias="0.1">
+
+            <TextView
+                android:id="@+id/reg_tv10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#001B2E"
+                android:textSize="17dp"
+                android:text="Nombre"
+                android:textStyle="bold"
+                android:fontFamily="@font/palatino_linotype"/>
+
+            <EditText
+                android:id="@+id/et_updUser_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#001B2E"
+                android:hint="Ingresa el nombre completo del usuario"
+                android:textColorHint="#001B2E"
+                android:textSize="17sp"
+                android:textStyle="italic"
+                android:inputType="text"
+                android:fontFamily="@font/palatino_linotype"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#001B2E"
+                android:textSize="17dp"
+                android:text="Área/Grupo"
+                android:textStyle="bold"
+                android:fontFamily="@font/palatino_linotype"/>
+
+        </LinearLayout>
+
+        <include layout="@layout/formulario_areas"
+            android:id="@+id/formulario_Areas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linlay_2"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/formulario_Areas"
+            app:layout_constraintVertical_bias="0.1">
+
+            <Button
+                android:id="@+id/btnChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Cambiar tipo de usuario"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:textColor="#001B2E"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#00000000"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="#001B2E"
+                app:cornerRadius="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/formularioFotos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btnSeleccionar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Seleccionar Fotos (9)"
+                    android:textAllCaps="false"
+                    android:textSize="15sp"
+                    android:padding="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:backgroundTint="#00000000"
+                    android:textColor="#001B2E"
+                    style="?attr/materialButtonOutlinedStyle"
+                    app:strokeColor="#001B2E"
+                    app:cornerRadius="10dp"/>
+
+                <GridView
+                    android:id="@+id/gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:horizontalSpacing="8dp"
+                    android:numColumns="3"
+                    android:paddingTop="16dp"
+                    android:verticalSpacing="8dp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/statusText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:gravity="center_horizontal"
+                    android:paddingTop="16dp"
+                    android:textColor="#001B2E"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/fomularioInvitados"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/reg_tv5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#001B2E"
+                    android:textSize="17sp"
+                    android:text="Fecha de inicio"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/palatino_linotype"/>
+
+                <EditText
+                    android:id="@+id/et_reg_inv_fechaInicio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:textColor="#001B2E"
+                    android:hint="Fecha de inicio de permisos"
+                    android:textColorHint="#001B2E"
+                    android:drawableEnd="@drawable/calendario_icon"
+                    android:textSize="17sp"
+                    android:textStyle="italic"
+                    android:inputType="time"
+                    android:fontFamily="@font/palatino_linotype"/>
+
+                <TextView
+                    android:id="@+id/reg_tv6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#001B2E"
+                    android:textSize="17sp"
+                    android:text="Fecha de fin"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/palatino_linotype"/>
+
+                <EditText
+                    android:id="@+id/et_reg_inv_fechaFin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:textColor="#001B2E"
+                    android:hint="Fecha de fin de permisos"
+                    android:textColorHint="#001B2E"
+                    android:drawableEnd="@drawable/calendario_icon"
+                    android:textSize="17sp"
+                    android:textStyle="italic"
+                    android:inputType="time"
+                    android:fontFamily="@font/palatino_linotype"/>
+
+                <TextView
+                    android:id="@+id/reg_tv7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#001B2E"
+                    android:textSize="17sp"
+                    android:text="Horario"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/palatino_linotype"/>
+
+                <RelativeLayout
+                    android:id="@+id/reg_inv_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/hor_de_inv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="15dp"
+                        android:textColor="#001B2E"
+                        android:textSize="17sp"
+                        android:text="De: "
+                        android:textStyle="bold"
+                        android:fontFamily="@font/palatino_linotype"/>
+
+                    <EditText
+                        android:id="@+id/et_reg_inv_horaInicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:textColor="#001B2E"
+                        android:layout_toEndOf="@+id/hor_de_inv"
+                        android:layout_toRightOf="@+id/hor_de_inv"
+                        android:hint="00:00"
+                        android:textColorHint="#001B2E"
+                        android:textSize="17sp"
+                        android:textStyle="italic"
+                        android:inputType="time"
+                        android:fontFamily="@font/palatino_linotype"/>
+
+                    <TextView
+                        android:id="@+id/hor_de_inv_sal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="30dp"
+                        android:textColor="#001B2E"
+                        android:layout_toEndOf="@+id/et_reg_inv_horaInicio"
+                        android:layout_toRightOf="@+id/et_reg_inv_horaInicio"
+                        android:textSize="17sp"
+                        android:text="A: "
+                        android:textStyle="bold"
+                        android:fontFamily="@font/palatino_linotype"/>
+
+                    <EditText
+                        android:id="@+id/et_reg_inv_horaFin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:textColor="#001B2E"
+                        android:layout_toEndOf="@+id/hor_de_inv_sal"
+                        android:layout_toRightOf="@+id/hor_de_inv_sal"
+                        android:hint="00:00"
+                        android:textColorHint="#001B2E"
+                        android:textSize="17sp"
+                        android:textStyle="italic"
+                        android:inputType="time"
+                        android:fontFamily="@font/palatino_linotype"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnUpdateUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Actualizar"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textColor="#001B2E"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#00000000"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="#001B2E"
+                app:cornerRadius="10dp"/>
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -107,12 +107,10 @@ class historial_accesos : navDrawer(), OnItemClickListener {
     // 3. Implementa el metodo onItemClick de la interfaz
     override fun onItemClick(documentId: String) {
         val roleManager = roleManager(this)
-        // Aquí es donde manejas el clic.
-        // Inicia el nuevo Activity y pasa el documentId.
         Log.d("HistorialAccesos", "Se hizo clic en el documento con ID: $documentId")
 
-        val intent = Intent(this, acceso_especifico::class.java) // Reemplaza DetalleAccesoActivity con el nombre de tu Activity de destino
-        intent.putExtra("documentId", documentId) // Pasa el ID del documento al nuevo Activity
+        val intent = Intent(this, acceso_especifico::class.java)
+        intent.putExtra("documentId", documentId)
         if(roleManager.isAdmin()){
             intent.putExtra("nombreUsuario", spinnerUsers.selectedItem.toString())
         } else{

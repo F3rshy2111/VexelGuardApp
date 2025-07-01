@@ -20,6 +20,12 @@
         android:theme="@style/Theme.InicioSesion"
         tools:targetApi="31">
         <activity
+            android:name=".edit_specific_user"
+            android:exported="false" />
+        <activity
+            android:name=".editar_usuarios"
+            android:exported="false" />
+        <activity
             android:name=".update_password"
             android:exported="false" />
         <activity

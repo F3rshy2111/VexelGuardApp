@@ -159,7 +159,6 @@ class codigo_acceso :  navDrawer() {
         try {
             val hints = EnumMap<EncodeHintType, Any>(EncodeHintType::class.java)
 
-
             val width = 400
             val height = 400
             val codeColor = Color.parseColor("#001B2E") // Color del código (píxeles "negros" de la matriz)

@@ -1,6 +1,7 @@
 package com.example.iniciosesion
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,7 @@ import java.util.Calendar
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.app.VoiceInteractor
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -214,10 +216,10 @@ class registro_invitado : navDrawer() {
                     val uid = user?.uid ?: return@addOnCompleteListener
 
                     val userData = hashMapOf(
-                        "correo" to correo,
-                        "nombre" to nombre,
+                        "correo" to correo.trim(),
+                        "nombre" to nombre.trim(),
                         "tipo" to "Invitado",
-                        "area" to area,
+                        "area" to area.trim(),
                         "foto" to "URL",
                         "permisos" to uid,
                         "verificado" to false
@@ -267,6 +269,15 @@ class registro_invitado : navDrawer() {
         CoroutineScope(Dispatchers.Main).launch {
             documentChecker.crearPermisosInvitados(uid,datos)
         }
+
+        val customView = layoutInflater.inflate(R.layout.dialog_registro_exitoso, null)
+        AlertDialog.Builder(this@registro_invitado)
+            .setView(customView)
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+                val intencion1 = Intent(applicationContext, Portada::class.java)
+                startActivity(intencion1)
+            }.show()
 
     }
 

@@ -45,7 +45,7 @@ class CustomAdapter (
     }
 
     override fun getItemCount(): Int {
-        Log.d("PruebasCA","Size")
+        //Log.d("PruebasCA","Size")
         return fechas.size
     }
 
@@ -62,7 +62,7 @@ class CustomAdapter (
 
         viewHolder.itemView.setOnClickListener {
             // Cuando se hace clic en un elemento, llama al metodo onItemClick del listener
-            // Pasa el ID del documento, que en tu caso es la 'fecha' (document.id)
+            // Pasa el ID del documento
             listener.onItemClick(fechas[i])
         }
 

@@ -2,7 +2,10 @@ package com.example.iniciosesion
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -27,6 +30,9 @@ class update_password : navDrawer() {
     private lateinit var btnUpdate : Button
     private lateinit var btnBack : Button
     private lateinit var text : TextView
+    private lateinit var passwordRequirementsNew: TextView
+    private lateinit var passwordRequirementsCheck: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val db = Firebase.firestore
@@ -36,14 +42,6 @@ class update_password : navDrawer() {
 
         super.onCreate(savedInstanceState)
         disableNavDrawerInteraction()
-        /*
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_update_password)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.update_pswrd_view)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }*/
 
         userName = findViewById(R.id.updPswrd_nombre)
         userMail = findViewById(R.id.updPswrd_correo)
@@ -53,6 +51,9 @@ class update_password : navDrawer() {
         btnUpdate = findViewById(R.id.btnUpdatePswrd)
         btnBack = findViewById(R.id.btnBack)
         text = findViewById(R.id.updPswrd_txt)
+        passwordRequirementsNew = findViewById(R.id.password_requirements_new)
+        passwordRequirementsCheck = findViewById(R.id.password_requirements_check)
+
 
         if(!newText.isNullOrEmpty()){
             btnBack.visibility = Button.VISIBLE
@@ -85,7 +86,12 @@ class update_password : navDrawer() {
             val nueva = newPswrd.text.toString()
             val confirmacion = confirmPswrd.text.toString()
             if(actual != "" && nueva != "" && confirmacion != ""){
-                if(nueva == confirmacion){
+                if(nueva == confirmacion && nueva != actual){
+                    if (!esContraseñaSegura(nueva)) {
+                        Toast.makeText(this, "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial.", Toast.LENGTH_LONG).show()
+                        return@setOnClickListener
+                    }
+
                     actualizarContraseña(actual, nueva, onSuccess = {
                         changeValidation()
                         Toast.makeText(this, "Contraseña cambiada exitosamente.", Toast.LENGTH_SHORT).show()
@@ -100,7 +106,10 @@ class update_password : navDrawer() {
                             // pidiendo la contraseña actual. Si ya lo estás haciendo con reautenticarYCambiarContrasena,
                             // entonces el error aquí podría ser "Contraseña actual incorrecta".
                         })
-                } else {
+                } else if(nueva == actual) {
+                    Toast.makeText(this, "La nueva contraseña no puede ser igual a la anterior", Toast.LENGTH_SHORT).show()
+                }else
+                 {
                     Toast.makeText(this, "Las contraseñas ingresadas no coinciden", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -110,6 +119,35 @@ class update_password : navDrawer() {
             val intent = Intent(this, info_usuario::class.java)
             startActivity(intent)
         }
+
+        newPswrd.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val password = s.toString()
+                if (esContraseñaSegura(password)) {
+                    passwordRequirementsNew.visibility = View.GONE
+                } else {
+                    passwordRequirementsNew.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        confirmPswrd.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val password = s.toString()
+                if (esContraseñaSegura(password)) {
+                    passwordRequirementsCheck.visibility = View.GONE
+                } else {
+                    passwordRequirementsCheck.visibility = View.VISIBLE
+                }
+            }
+        })
+
     }
 
     override fun getLayoutResId(): Int {
@@ -159,4 +197,11 @@ class update_password : navDrawer() {
             }
         }
     }
+
+    fun esContraseñaSegura(password: String): Boolean {
+        val patron = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#\$%^&*()_+\\-={}:;\"'<>?,./]).{6,}\$")
+        return patron.matches(password)
+    }
+
+
 }

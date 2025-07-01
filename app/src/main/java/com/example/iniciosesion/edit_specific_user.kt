@@ -15,7 +15,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -23,38 +22,68 @@ import android.widget.GridView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.transition.Visibility
 import com.example.iniciosesion.com.example.iniciosesion.DocumentChecker
 import com.example.iniciosesion.com.example.iniciosesion.ImageAdapter
-import com.example.iniciosesion.com.example.iniciosesion.roleManager
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import org.json.JSONObject
+import java.io.IOException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import java.time.LocalTime
 import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-
-import java.io.IOException
-class registro_regular : navDrawer() {
+class edit_specific_user : navDrawer() {
     private val calendar = Calendar.getInstance()
+    private lateinit var correoTv : TextView
+    private lateinit var tipoTv : TextView
+    private lateinit var datosBioTv : TextView
+    private lateinit var otpTv : TextView
+    private lateinit var lastOtpTv : TextView
+    private lateinit var datosBioRL : RelativeLayout
+    private lateinit var otpRL : RelativeLayout
+    private lateinit var lastOtpRL : RelativeLayout
+    private lateinit var nombreET : EditText
+    private lateinit var btnUpdate : Button
+    private lateinit var btnCambiarUser:Button
+    private lateinit var formularioInvitados: LinearLayout
+    private lateinit var formularioRegulares: LinearLayout
+    val db = Firebase.firestore
+    var userTipo = ""
+    var userDatosBio = ""
+    var userOtp = ""
+    var userLastOtp = ""
+    var userArea = ""
+
+    private val urlOTP = "https://crearotpusuario-668387496305.us-central1.run.app/crear_otp_usuario"
+    private val client = OkHttpClient()
+
+    //Formulario areas
     private lateinit var etCorreo : EditText
     private lateinit var etNombre : EditText
     private lateinit var etHoraEntLunes : EditText
@@ -78,16 +107,14 @@ class registro_regular : navDrawer() {
     private lateinit var cbViernes : CheckBox
     private lateinit var cbSabado : CheckBox
     private lateinit var cbDomingo : CheckBox
-    private lateinit var vista: View
+    private lateinit var vista: ScrollView
     private lateinit var spinArea: Spinner
     private lateinit var btnRegistrar: Button
-    private lateinit var etNewArea : EditText
     private lateinit var cbNewArea : CheckBox
     private lateinit var rlSpinner: RelativeLayout
     private lateinit var linlayCrearArea: LinearLayout
     private val opcionesList =ArrayList<String>()
     private lateinit var adapter: ArrayAdapter<String>
-
     private lateinit var showLunes : Array<*>
     private lateinit var showMartes : Array<*>
     private lateinit var showMiercoles: Array<*>
@@ -98,13 +125,23 @@ class registro_regular : navDrawer() {
     private lateinit var showSemana : Array<*>
     private var gruposMap : MutableMap<String, Map<String,Any>?> = mutableMapOf()
 
+    private lateinit var etFechaInicio: EditText
+    private lateinit var etFechaFin: EditText
+    private lateinit var etHoraInicio: EditText
+    private lateinit var etHoraFin: EditText
+    private lateinit var elementos: Array<*>
+    private val calendarFechaInicio = Calendar.getInstance()
+    private val calendarFechaFin = Calendar.getInstance()
+    private val calendarHoraInicio = Calendar.getInstance()
+    private val calendarHoraFin = Calendar.getInstance()
+
     // Selección de Fotos
     private val PICK_IMAGES_REQUEST_CODE = 101
     private val PERMISSION_REQUEST_CODE = 102
     private val urlFace =
         "https://almacenarembedding-668387496305.us-central1.run.app/procesar_foto"
     private lateinit var statusText: TextView
-    private lateinit var layout: LinearLayout
+    //private lateinit var layout: LinearLayout
     private lateinit var btnSeleccionar: Button
     private lateinit var gridView: GridView
     private val imageUris = mutableListOf<Uri>()
@@ -112,11 +149,12 @@ class registro_regular : navDrawer() {
     private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val uid = intent.getStringExtra("uid")
+        userArea = intent.getStringExtra("areaUser").toString()
+        var btnCambio = false
         super.onCreate(savedInstanceState)
-        val prefsManager = SharedPreferencesManager(this)
-        val roleManager = roleManager(this)
-        val auth = Firebase.auth
 
+        // Vistas Areas
         etCorreo = findViewById(R.id.et_reg_regu_correo)
         etNombre = findViewById(R.id.et_reg_regu_nombre)
         cbLunes = findViewById(R.id.edAreas_Rbtn_Lunes)
@@ -141,8 +179,7 @@ class registro_regular : navDrawer() {
         etHoraSalidaViernes = findViewById(R.id.edAreas_etSal_Viernes)
         etHoraSalidaSabado = findViewById(R.id.edAreas_etSal_Sabado)
         etHoraSalidaDomingo = findViewById(R.id.edAreas_etSal_Domingo)
-        vista = findViewById(R.id.reg_regular_constrait)
-        etNewArea = findViewById(R.id.edAreas_etCrearArea)
+        vista = findViewById(R.id.editSpecificUser)
         btnRegistrar = findViewById(R.id.btn_reg_regu)
         cbNewArea = findViewById(R.id.cb_crearArea)
         rlSpinner = findViewById(R.id.edAreas_RL_Spinner)
@@ -161,8 +198,6 @@ class registro_regular : navDrawer() {
         etHoraSalidaViernes.setOnClickListener{ showTimePickerDialog(etHoraSalidaViernes) }
         etHoraSalidaSabado.setOnClickListener{ showTimePickerDialog(etHoraSalidaSabado) }
         etHoraSalidaDomingo.setOnClickListener{ showTimePickerDialog(etHoraSalidaDomingo) }
-
-
         showLunes = arrayOf(cbLunes, etHoraEntLunes,etHoraSalidaLunes)
         showMartes = arrayOf(cbMartes,etHoraEntMartes,etHoraSalidaMartes)
         showMiercoles = arrayOf(cbMiercoles,etHoraEntMiercoles,etHoraSalidaMiercoles)
@@ -171,22 +206,49 @@ class registro_regular : navDrawer() {
         showSabado = arrayOf(cbSabado, etHoraEntSabado, etHoraSalidaSabado)
         showDomingo = arrayOf(cbDomingo, etHoraEntDomingo, etHoraSalidaDomingo)
         showSemana = arrayOf(showLunes,showMartes,showMiercoles, showJueves, showViernes, showSabado, showDomingo)
+        cbNewArea.visibility = CheckBox.GONE
+        //
 
+        etFechaInicio = findViewById(R.id.et_reg_inv_fechaInicio)
+        etFechaFin = findViewById(R.id.et_reg_inv_fechaFin)
+        etHoraInicio = findViewById(R.id.et_reg_inv_horaInicio)
+        etHoraFin = findViewById(R.id.et_reg_inv_horaFin)
+        elementos = arrayOf(etFechaInicio, etFechaFin, etHoraInicio, etHoraFin)
+        etFechaInicio.setOnClickListener { showDatePickerDialog(etFechaInicio, calendarFechaInicio, null) }
+        etFechaFin.setOnClickListener { showDatePickerDialog(etFechaFin, calendarFechaFin, calendarFechaInicio ) }
+        etHoraInicio.setOnClickListener { showTimePickerDialog(etHoraInicio, calendarHoraInicio, null, null) }
+        etHoraFin.setOnClickListener {
+            showTimePickerDialog(etHoraFin, calendarHoraFin, calendarHoraInicio,
+                if (etFechaInicio.text.isNotEmpty() && etFechaFin.text.isNotEmpty() &&
+                    calendarFechaInicio.timeInMillis == calendarFechaFin.timeInMillis) calendarHoraInicio else null)
+        }
+
+        correoTv = findViewById(R.id.updUser_correo)
+        tipoTv = findViewById(R.id.updUser_tipo)
+        datosBioTv = findViewById(R.id.updUser_datosBio)
+        otpTv = findViewById(R.id.updUser_OTP)
+        lastOtpTv = findViewById(R.id.updUser_lastOTP)
+        datosBioRL = findViewById(R.id.rl_updUser_Bio)
+        otpRL = findViewById(R.id.rl_updUser_OTP)
+        lastOtpRL = findViewById(R.id.rl_updUser_lastOTP)
+        nombreET = findViewById(R.id.et_updUser_nombre)
+        btnUpdate = findViewById(R.id.btnUpdateUser)
+        btnCambiarUser = findViewById(R.id.btnChange)
+        formularioRegulares = findViewById(R.id.formularioFotos)
+        formularioInvitados = findViewById(R.id.fomularioInvitados)
 
         statusText = findViewById(R.id.statusText)
-        layout = findViewById(R.id.main)
+        //layout = findViewById(R.id.main)
         btnSeleccionar = findViewById(R.id.btnSeleccionar)
         gridView = findViewById(R.id.gridView)
         progressBar = findViewById(R.id.progressBar)
-
-
         imageAdapter = ImageAdapter(this, imageUris)
         gridView.adapter = imageAdapter
-
         btnSeleccionar.setOnClickListener {
             pedirPermisos()
         }
 
+        // --------- Spiner Area ---------------------
         adapter = ArrayAdapter(this,
             R.layout.spinner_selected_item, opcionesList)
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
@@ -211,59 +273,152 @@ class registro_regular : navDrawer() {
             }
         }
 
-        vista.setOnClickListener{ hideKeyboard(vista) }
+        //vista.setOnClickListener{ hideKeyboard(vista) }
 
-        findViewById<CheckBox>(R.id.cb_crearArea).setOnCheckedChangeListener{
-            buttonView, isChecked ->
-            run {
-                if(buttonView.isChecked){
-                    rlSpinner.visibility = Spinner.GONE
-                    linlayCrearArea.visibility = EditText.VISIBLE
-                    clearPermisos(true)
+
+        if (uid != null) {
+            db.collection("usuarios").document(uid).get().addOnSuccessListener { document ->
+                if(document != null){
+                    var correo = document.getString("correo")
+                    if(correo.isNullOrEmpty()){ correo = document.getString("email")}
+                    val tipo = document.getString("tipo")
+                    val datosBio:Boolean = document.contains("id_datos_biometricos")
+                    val otp:Boolean = document.contains("TOTP")
+                    val lastOtp = document.contains("last_totp")
+                    val nombre = document.getString("nombre")
+                    val area = document.getString("area")
+
+                    userTipo = document.getString("tipo").toString()
+                    userDatosBio = document.getString("id_datos_biometricos").toString()
+                    userOtp = document.getString("TOTP").toString()
+                    userLastOtp = document.getString("last_totp").toString()
+
+                    correoTv.setText(correo)
+                    tipoTv.setText(tipo)
+                    datosBioTv.setText(datosBio.toString())
+                    otpTv.setText(otp.toString())
+                    lastOtpTv.setText(lastOtp.toString())
+                    nombreET.setText(nombre)
+                }
+            }
+        }
+
+        btnCambiarUser.setOnClickListener {
+            var change = false
+            if(userTipo=="Invitado" && !btnCambio){
+                formularioRegulares.visibility = LinearLayout.VISIBLE
+                btnCambiarUser.setText("Cancelar cambio")
+                btnCambio = true
+                change = true
+                btnUpdate.isEnabled = false
+            }
+
+            if(userTipo=="Regular" && !btnCambio){
+                formularioInvitados.visibility = LinearLayout.VISIBLE
+                btnCambiarUser.setText("Cancelar cambio")
+                btnCambio = true
+                change = true
+            }
+
+            if(btnCambio && !change){
+                formularioRegulares.visibility = LinearLayout.GONE
+                formularioInvitados.visibility = LinearLayout.GONE
+                btnCambiarUser.setText("Cambiar tipo de usuario")
+                btnCambio = false
+            }
+
+        }
+
+        btnUpdate.setOnClickListener {
+            if(userTipo=="Invitado"){
+                if(!uid.isNullOrEmpty() && btnCambio){
+                    invitadoToRegular(uid)
                 } else {
-                    rlSpinner.visibility = Spinner.VISIBLE
-                    linlayCrearArea.visibility = EditText.GONE
+                    val userData = hashMapOf<String, Any>(
+                        "nombre" to nombreET.text.toString().trim(),
+                        "area" to spinArea.selectedItem.toString()
+                    )
+
+                    if (uid != null) {
+                        db.collection("usuarios").document(uid).update(userData)
+                            .addOnSuccessListener {
+                                dialogPromt(true)
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Error al editar usuario: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+            }
+
+            if(userTipo=="Regular"){
+                if(btnCambio){
+                    val comprobacion = comprobacionCamposInvitado()
+                    if(comprobacion && !uid.isNullOrEmpty()){
+                        regularToInvitado(uid)
+                    } else {
+                        Toast.makeText(applicationContext, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    val userData = hashMapOf<String, Any>(
+                        "nombre" to nombreET.text.toString().trim(),
+                        "area" to spinArea.selectedItem.toString(),
+                        "permisos" to spinArea.selectedItem.toString()
+                    )
+
+                    if (uid != null) {
+                        db.collection("usuarios").document(uid).update(userData)
+                            .addOnSuccessListener {
+                                dialogPromt(true)
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Error al editar usuario: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
                 }
             }
         }
 
-        btnRegistrar.isEnabled = false
 
-        btnRegistrar.setOnClickListener{
-            val correo = etCorreo.text.toString()
-            val nombre = etNombre.text.toString()
-            var area = ""
-            if (cbNewArea.isChecked){
-                area = etNewArea.text.toString()
-            } else {
-                area = spinArea.selectedItem.toString()
-            }
-            if(roleManager.isAdmin()){
-                if(cbNewArea.isChecked){
-                    if(nombre != null && correo != null && area != null){
-                        crearUsuario(correo, "123456", area, nombre)
-                        crearArea(showSemana)
-                    } else {
-                        Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
-                    }
-                } else{
-                    if(nombre != null && correo != null && area != null){
-                        crearUsuario(correo, "123456", area, nombre)
-                    } else {
-                        Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
-                    }
-
-                }
-            } else{
-                Toast.makeText(this,"No tienes permiso para ejecutar esta acción", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
-
 
     // Proporciona el ID del layout específico de HomeActivity
     override fun getLayoutResId(): Int {
-        return R.layout.activity_registro_regular // Asegúrate de tener este layout
+        return R.layout.activity_edit_specific_user // Asegúrate de tener este layout
+    }
+
+    fun eliminarDocumentosTipo(uid: String){
+        if(tipoTv.text.toString() == "Invitado"){
+            val updates = hashMapOf<String, Any>(
+                "TOTP" to FieldValue.delete(),
+                "last_totp" to FieldValue.delete()
+            )
+
+            db.collection("usuarios").document(uid).update(updates).addOnSuccessListener {
+                Log.d("CambioTipo", "Campos de invitado eliminados")
+            }
+
+            val rutaInvitados = db.collection("Permisos").document("invitados").collection("Invitados")
+
+            rutaInvitados.document(uid).delete().addOnSuccessListener {
+                Log.d("CambioTipo", "Documento de permisos de invitado eliminados")
+            }
+        }
+
+        if(tipoTv.text.toString() == "Regular"){
+            val updates = hashMapOf<String, Any>(
+                "id_datos_biometricos" to FieldValue.delete()
+            )
+
+            db.collection("usuarios").document(uid).update(updates).addOnSuccessListener {
+                Log.d("CambioTipo", "Campos de regulares eliminados")
+            }
+
+            db.collection("Datos_Biometricos").document(userDatosBio).delete().addOnSuccessListener {
+                Log.d("CambioTipo", "Campos de regulares eliminados")
+            }
+        }
+
     }
 
     private fun showDatePickerDialog(et: EditText) {
@@ -312,11 +467,87 @@ class registro_regular : navDrawer() {
         timePickerDialog.show()
     }
 
+    private fun showDatePickerDialog(et: EditText, currentCalendar: Calendar, minDateCalendar: Calendar?) {
+        val year = currentCalendar.get(Calendar.YEAR)
+        val month = currentCalendar.get(Calendar.MONTH)
+        val day = currentCalendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                currentCalendar.set(selectedYear, selectedMonth, selectedDay)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                et.setText(dateFormat.format(currentCalendar.time))
+
+                // Si se selecciona una nueva fecha de inicio, resetear la fecha de fin si es anterior
+                if (et == etFechaInicio && etFechaFin.text.isNotEmpty()) {
+                    if (currentCalendar.time.after(calendarFechaFin.time)) {
+                        etFechaFin.setText("") // Limpiar la fecha de fin si es anterior
+                        // Opcionalmente, puedes establecer la fecha de fin igual a la de inicio
+                        calendarFechaFin.time = currentCalendar.time
+                        etFechaFin.setText(dateFormat.format(calendarFechaFin.time))
+                    }
+                }
+            },
+            year,
+            month,
+            day
+        )
+
+        minDateCalendar?.let {
+            datePickerDialog.datePicker.minDate = it.timeInMillis
+        }
+        datePickerDialog.show()
+    }
+
+    private fun showTimePickerDialog(et: EditText, currentCalendar: Calendar, minTimeCalendar: Calendar?, restrictByDate: Calendar?) {
+        val hour = currentCalendar.get(Calendar.HOUR_OF_DAY) // Hora actual en formato 24h
+        val minute = currentCalendar.get(Calendar.MINUTE)    // Minuto actual
+
+        val timePickerDialog = TimePickerDialog(
+            this,
+            { _, selectedHour, selectedMinute ->
+                // Actualiza el objeto Calendar con la hora seleccionada
+                currentCalendar.set(Calendar.HOUR_OF_DAY, selectedHour)
+                currentCalendar.set(Calendar.MINUTE, selectedMinute)
+
+                // Formatea la hora y la establece en el EditText
+                // "HH:mm" para formato 24h (ej. 15:30)
+                // "hh:mm a" para formato 12h con AM/PM (ej. 03:30 PM)
+                val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+                et.setText(timeFormat.format(currentCalendar.time))
+
+                // Lógica para resetear la hora de fin si es anterior a la de inicio en el mismo día
+                if (et == etHoraInicio && etHoraFin.text.isNotEmpty() && restrictByDate != null &&
+                    calendarFechaInicio.timeInMillis == calendarFechaFin.timeInMillis &&
+                    currentCalendar.time.after(calendarHoraFin.time)) {
+                    etHoraFin.setText("") // Limpiar la hora de fin si es anterior
+                }
+            },
+            hour,
+            minute,
+            true // true para formato 24h, false para formato 12h con AM/PM
+        )
+
+        /*// Restringir el TimePicker si es necesario
+        // Solo aplica la restricción de hora si las fechas son las mismas
+        if (restrictByDate != null && calendarFechaInicio.timeInMillis == calendarFechaFin.timeInMillis) {
+            minTimeCalendar?.let {
+                // No hay un metodo directo para establecer un minTime en TimePickerDialog.
+                // En su lugar, puedes validar la selección después de que el usuario elige una hora.
+                // Sin embargo, si quieres "deshabilitar" horas, tendrías que crear un TimePicker personalizado.
+                // Para una solución simple, validaremos después de la selección.
+            }
+        }*/
+        timePickerDialog.show()
+    }
+
     fun hideKeyboard(view: View){
         val inputMethodManager: InputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken,0)
     }
 
+    //-------------------------------- FORMULARIO AREAS --------------------------------------
     private fun showPermisos(permisos: Map<String,Any>){
         clearPermisos()
 
@@ -427,114 +658,36 @@ class registro_regular : navDrawer() {
                     adapter.clear() // Clear existing items
                     adapter.addAll(grupos.keys.toList()) // Add new items
                     adapter.notifyDataSetChanged() // Notify the adapter that data has changed
+
+                    val defaultValue = userArea
+                    val spinnerPosition = adapter.getPosition(defaultValue)
+                    spinArea.setSelection(spinnerPosition)
                 }
             }
         }
     }
 
-    private fun crearUsuario(email: String, password:String, area:String, nombre:String){
-        Log.d("Test", "Correo: ${email}")
-        Log.d("Test", "Nombre: ${nombre}")
-        Log.d("Test", "Área: ${area}")
-        val db = Firebase.firestore
-        val secondaryApp = FirebaseApp.getInstance("secondaryFirebaseAuth")
-        val secondaryAuth = FirebaseAuth.getInstance(secondaryApp)
+    //-------------------------------- FORMULARIO REGULAR --------------------------------------
 
-        secondaryAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user = task.result?.user
-                        val uid = user?.uid ?: return@addOnCompleteListener
+    private fun invitadoToRegular(uid:String){
+        eliminarDocumentosTipo(uid)
 
-                        val userData = hashMapOf(
-                            "correo" to email,
-                            "nombre" to nombre,
-                            "tipo" to "Regular",
-                            "area" to area,
-                            "foto" to "URL",
-                            "permisos" to area,
-                            "verificado" to false
-                        )
-
-                        db.collection("usuarios").document(uid).set(userData)
-                            .addOnSuccessListener {
-                                enviarVariasFotos(uid)
-                                crearControlAsistencia(uid)
-                            }
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this, "Error al guardar usuario: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
-
-                    } else {
-                        Toast.makeText(this, "Error en el registro: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-    }
-
-    private fun crearArea(permisos: Array<*>){
-        val documentChecker = DocumentChecker()
-
-        val mapDatosArea : MutableMap<String, List<String>> = mutableMapOf()
-        for(oneDay in permisos){
-            if(oneDay is Array<*>){
-                val checkBox = oneDay[0] as CheckBox
-                if(checkBox.isChecked){
-                    val dia = obtenerDia(checkBox)
-                    val ent = oneDay[1] as EditText
-                    val entrada = ent.text.toString()
-                    val sal = oneDay[2] as EditText
-                    val salida = sal.text.toString()
-                    val entSal :  MutableList<String> = mutableListOf()
-                    entSal.add(entrada)
-                    entSal.add(salida)
-                    mapDatosArea.put(dia,entSal)
-
-                    CoroutineScope(Dispatchers.Main).launch {
-                        documentChecker.crearDocumentoConId("Permisos",etNewArea.text.toString().trim(),mapDatosArea)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun crearControlAsistencia(uid:String){
-        val documentChecker = DocumentChecker()
-        val db = Firebase.firestore
-        val currentDate = LocalDate.now()
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale("es", "MX"))
-        val formattedDate = currentDate.format(formatter)
-        var idCA = ""
-
-        val mapaControl = hashMapOf(
-            "id_usuario" to uid,
-            "num_accesos" to 0
+        val userData = hashMapOf<String, Any>(
+            "nombre" to nombreET.text.toString().trim(),
+            "area" to spinArea.selectedItem.toString(),
+            "permisos" to spinArea.selectedItem.toString(),
+            "tipo" to "Regular"
         )
 
-        val mapaAsistencia : Map<String, Any> = mapOf(
-            "salida" to "",
-            "num_registros" to 0,
-            "metodo" to "RF")
-
-        db.collection("Control_Asistencia")
-            .add(mapaControl)
-            .addOnSuccessListener { documentReference ->
-                idCA = documentReference.id
-                println("Documento agregado con ID: ${documentReference.id}")
-
-                CoroutineScope(Dispatchers.Main).launch {
-                    documentChecker.crearAccesoConId("Control_Asistencia",idCA,"Accesos","01-01-36",mapaAsistencia)
-                }
-
-                db.collection("usuarios").document(uid).update("historial_accesos",idCA).addOnSuccessListener { documentReference ->
-                    println("Documento actualizado") }
-                    .addOnFailureListener { e ->
-                        println("Error al agregar el documento: $e")
-                    }
+        db.collection("usuarios").document(uid).update(userData)
+            .addOnSuccessListener {
+                //Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                println("Error al agregar el documento: $e")
+                Toast.makeText(this, "Error al editar usuario: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+
+        enviarVariasFotos(uid)
     }
 
     private fun pedirPermisos() {
@@ -597,10 +750,11 @@ class registro_regular : navDrawer() {
             if (imageUris.size != 9) {
                 Toast.makeText(this, "Debes seleccionar exactamente 9 imágenes", Toast.LENGTH_LONG)
                     .show()
-                btnRegistrar.isEnabled = false
+                btnUpdate.isEnabled = false
             } else {
                 imageAdapter.notifyDataSetChanged()
-                btnRegistrar.isEnabled = true
+                //Toast.makeText(this, "Arriba los Vaqueros", Toast.LENGTH_LONG).show()
+                btnUpdate.isEnabled = true
             }
         }
     }
@@ -658,14 +812,11 @@ class registro_regular : navDrawer() {
                     runOnUiThread {
                         progressBar.visibility = View.GONE
                         if (response.isSuccessful) {
-                            val customView = layoutInflater.inflate(R.layout.dialog_registro_exitoso, null)
-                            AlertDialog.Builder(this@registro_regular)
-                                .setView(customView)
-                                .setPositiveButton("Aceptar") { dialog, _ ->
-                                    dialog.dismiss()
-                                    val intencion1 = Intent(applicationContext, Portada::class.java)
-                                    startActivity(intencion1)
-                                }.show()
+                            /*statusText.text = "Fotos enviadas correctamente"
+                            Toast.makeText(applicationContext, "Usuario registrado y guardado", Toast.LENGTH_SHORT).show()
+                            val intencion1 = Intent(applicationContext, Portada::class.java)
+                            startActivity(intencion1)*/
+                            dialogPromt()
                         } else {
                             statusText.text = "Error en servidor: ${response.code}"
                         }
@@ -679,5 +830,130 @@ class registro_regular : navDrawer() {
                 statusText.text = "Error preparando fotos: ${e.message}"
             }
         }
+    }
+
+    //-------------------------------- FORMULARIO INVITADOS --------------------------------------
+
+    private fun regularToInvitado(uid:String){
+        eliminarDocumentosTipo(uid)
+
+        val userData = hashMapOf<String, Any>(
+            "nombre" to nombreET.text.toString().trim(),
+            "area" to spinArea.selectedItem.toString(),
+            "permisos" to uid,
+            "tipo" to "Invitado"
+        )
+
+        db.collection("usuarios").document(uid).update(userData)
+            .addOnSuccessListener {
+                //Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al editar usuario: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+
+        crearPermisosInvitados(uid)
+        crearMaestra(uid)
+    }
+
+    private fun crearMaestra(uid: String) {
+        try {
+            val json = JSONObject().apply {
+                put("user_id", uid)
+            }
+
+            val body = json.toString().toRequestBody("application/json".toMediaType())
+
+            val request = Request.Builder()
+                .url(urlOTP)
+                .post(body)
+                .addHeader("Content-Type", "application/json") // Añade esto explícitamente
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+
+                }
+            })
+
+            dialogPromt()
+        } catch (e: Exception) {
+            Log.d("Error","Error general: ${e.message}")
+        }
+    }
+
+    private fun crearPermisosInvitados(uid:String){
+        val documentChecker = DocumentChecker()
+
+        val fechaInicio = etFechaInicio.text.toString()
+        val fechaFin = etFechaFin.text.toString()
+        val horaEntrada = etHoraInicio.text.toString()
+        val horaSalida = etHoraFin.text.toString()
+        val horario : List<String> = listOf(horaEntrada, horaSalida)
+
+        var datos : Map<String, Any> = mapOf(
+            "fecha_inicio" to fechaInicio,
+            "fecha_fin" to fechaFin,
+            "lunes" to horario,
+            "martes" to horario,
+            "miércoles" to horario,
+            "jueves" to horario,
+            "viernes" to horario,
+            "sábado" to horario,
+            "domingo" to horario,
+        )
+
+        CoroutineScope(Dispatchers.Main).launch {
+            documentChecker.crearPermisosInvitados(uid,datos)
+        }
+
+    }
+
+    private fun comprobacionCamposInvitado() : Boolean{
+        var comprobacion = true
+        // Comprueba que todos los elementos del formulario esten completos
+        for(i in elementos){
+            val elemento = i as EditText
+            if(elemento.text.toString().isNullOrEmpty()){
+                comprobacion = false
+                break
+            }
+        }
+        //Comprueba que las horas seleccionadas sean válidas
+        val entrada = LocalTime.parse(etHoraInicio.text.toString())
+        val salida = LocalTime.parse(etHoraFin.text.toString())
+
+        val validacionHoras = entrada.isBefore(salida)
+        if(!validacionHoras){
+            comprobacion = false
+        }
+
+        return comprobacion
+    }
+
+    private fun dialogPromt(){
+        val customView = layoutInflater.inflate(R.layout.dialog_cambio_exitoso, null)
+        AlertDialog.Builder(this@edit_specific_user)
+            .setView(customView)
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+                val intencion1 = Intent(applicationContext, Portada::class.java)
+                startActivity(intencion1)
+            }.show()
+    }
+
+    private fun dialogPromt(actualizacion:Boolean){
+        val customView = layoutInflater.inflate(R.layout.dialog_actualizacion_exitosa, null)
+        AlertDialog.Builder(this@edit_specific_user)
+            .setView(customView)
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+                val intencion1 = Intent(applicationContext, Portada::class.java)
+                startActivity(intencion1)
+            }.show()
     }
 }

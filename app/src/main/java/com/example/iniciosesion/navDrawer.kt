@@ -81,60 +81,38 @@ abstract open class navDrawer : AppCompatActivity(), NavigationView.OnNavigation
 
     protected abstract fun getLayoutResId(): Int
 
-    /*
-     * Función para deshabilitar las interacciones del Navigation Drawer.
-     * - Bloquea la apertura por deslizamiento (swipe).
-     * - Oculta/deshabilita el icono de hamburguesa en la Toolbar.
-     * - Deshabilita todos los ítems del menú del Navigation Drawer.
-     */
     fun disableNavDrawerInteraction() {
-        // Deshabilita la apertura del drawer por deslizamiento
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
-        // Oculta el icono de hamburguesa en la Toolbar.
-        // Esto también impide que se abra al hacer clic en él.
         toggle.isDrawerIndicatorEnabled = false
-        toggle.syncState() // Sincroniza el estado del toggle después del cambio
+        toggle.syncState()
 
-        // Deshabilita todos los ítems del menú del NavigationView
         val menu: Menu = navigationView.menu
         for (i in 0 until menu.size()) {
             val menuItem = menu.getItem(i)
-            menuItem.isEnabled = false // Hace que el ítem no sea clickeable
+            menuItem.isEnabled = false
         }
-        isDrawerInteractionEnabled = false // Actualiza el estado
+        isDrawerInteractionEnabled = false
 
         btnInicio.isEnabled = false
         btnUserInfo.isEnabled = false
-        //Toast.makeText(this, "Funciones del Nav Drawer deshabilitadas.", Toast.LENGTH_SHORT).show()
     }
 
-    /*
-     * Función para habilitar las interacciones del Navigation Drawer.
-     * - Desbloquea la apertura por deslizamiento (swipe).
-     * - Muestra/habilita el icono de hamburguesa en la Toolbar.
-     * - Habilita todos los ítems del menú del Navigation Drawer.
-     * (Nota: la visibilidad de los ítems seguirá siendo controlada por `vistasXRol()`).
-     */
     fun enableNavDrawerInteraction() {
-        // Habilita la apertura del drawer por deslizamiento
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
-        // Muestra el icono de hamburguesa en la Toolbar y lo hace clickeable
         toggle.isDrawerIndicatorEnabled = true
-        toggle.syncState() // Sincroniza el estado del toggle después del cambio
+        toggle.syncState()
 
-        // Habilita todos los ítems del menú del NavigationView
         val menu: Menu = navigationView.menu
         for (i in 0 until menu.size()) {
             val menuItem = menu.getItem(i)
-            menuItem.isEnabled = true // Hace que el ítem sea clickeable
+            menuItem.isEnabled = true
         }
-        isDrawerInteractionEnabled = true // Actualiza el estado
+        isDrawerInteractionEnabled = true
 
         btnInicio.isEnabled = true
         btnUserInfo.isEnabled = true
-        //Toast.makeText(this, "Funciones del Nav Drawer habilitadas.", Toast.LENGTH_SHORT).show()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -172,9 +150,13 @@ abstract open class navDrawer : AppCompatActivity(), NavigationView.OnNavigation
                 val intencion7 = Intent(this, info_usuario::class.java)
                 startActivity(intencion7)
             }
-            R.id.nav_item_editarAreas -> {
-                val intencion8 = Intent(this, editar_areas::class.java)
+            R.id.nav_item_editarUsers -> {
+                val intencion8 = Intent(this, editar_usuarios::class.java)
                 startActivity(intencion8)
+            }
+            R.id.nav_item_editarAreas -> {
+                val intencion9 = Intent(this, editar_areas::class.java)
+                startActivity(intencion9)
             }
         }
         drawer.closeDrawer(GravityCompat.START)
@@ -227,16 +209,10 @@ abstract open class navDrawer : AppCompatActivity(), NavigationView.OnNavigation
         preferencesManager.clearAllUserData()
         Firebase.auth.signOut()
 
-        // 2. Navegar a la LoginActivity y limpiar la pila de retroceso
         val intent = Intent(this, inicio_sesion::class.java)
-        // Estos flags son cruciales:
-        // FLAG_ACTIVITY_NEW_TASK: Inicia la Activity en una nueva tarea.
-        // FLAG_ACTIVITY_CLEAR_TASK: Borra cualquier Activity existente en la tarea.
-        // Combinados, aseguran que la LoginActivity sea la única Activity en la nueva tarea.
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
 
-        // 3. Finalizar la Activity actual para que no se quede en la pila (aunque CLEAR_TASK ya hace esto)
         finish()
     }
 

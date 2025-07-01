@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.iniciosesion.CustomAdapter
-import com.example.iniciosesion.OnItemClickListener
 import com.example.iniciosesion.R
 
 class CustomAdapterSpecific (
@@ -35,7 +33,7 @@ class CustomAdapterSpecific (
     }
 
     override fun getItemCount(): Int {
-        Log.d("PruebasCA", "Size")
+        //Log.d("PruebasCA", "Size")
         return registros.size
     }
 

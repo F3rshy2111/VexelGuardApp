@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#EFE9F4"
+    android:padding="24dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:src="@drawable/vexel_logo"
+        android:tint="#001B2E"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="¡Registro exitoso!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#001B2E"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="El usuario fue registrado correctamente."
+        android:textSize="16sp"
+        android:textColor="#001B2E"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

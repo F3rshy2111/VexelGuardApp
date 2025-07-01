@@ -60,8 +60,6 @@ class inicio_sesion : AppCompatActivity(), View.OnClickListener  {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             rutinaLogin()
-            /*val intencion1 = Intent(this, Portada::class.java)
-            startActivity(intencion1)*/
         } else {
             preferencesManager.clearAllUserData()
         }
